@@ -21,7 +21,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #0f4c75 0%, #3282b8 25%, #0f3460 50%, #1e3d59 75%, #2e5266 100%);
+    background: linear-gradient(135deg, #4c7cbf 0%, #2975f9 25%, #1f7aea 50%, #2e4ea7 75%, #57a1c8 100%);
     z-index: -1;
 }
 
@@ -44,12 +44,12 @@ body {
 }
 
 #user-avatar {
-    width: 120px;
-    height: 120px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     margin-bottom: 20px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 3px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.064);
+    border: 0px solid rgba(255, 255, 255, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -74,19 +74,19 @@ body {
 
 .person-icon {
     position: relative;
-    width: 80px;
-    height: 80px;
+    width: 130px;
+    height: 130px;
 }
 
 .person-icon::before {
     /* Head (circle) */
     content: '';
     position: absolute;
-    width: 32px;
-    height: 32px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
     background-color: rgba(255, 255, 255, 0.8);
-    top: 10px;
+    top: 16px;
     left: 50%;
     transform: translateX(-50%);
 }
@@ -95,22 +95,26 @@ body {
     /* Body (semi-circle) */
     content: '';
     position: absolute;
-    width: 48px;
-    height: 24px;
-    border-radius: 24px 24px 0 0;
+    width: 78px;
+    height: 39px;
+    border-radius: 39px 39px 0 0;
     background-color: rgba(255, 255, 255, 0.8);
-    bottom: 10px;
+    bottom: 16px;
     left: 50%;
     transform: translateX(-50%);
 }
 
 #username {
     font-family: 'Nunito Sans', sans-serif;
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 600;
     margin-bottom: 30px;
     color: white;
-    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+    text-shadow: white;
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    outline: none;
 }
 
 /* Password Input Section */
@@ -122,14 +126,17 @@ body {
 }
 
 #password-input {
-    width: 310px;
-    height: 40px;
-    background: rgba(0, 0, 0, 0.8);
-    border: 0px solid rgb(67, 137, 207);
+    width: 350px;
+    height: 37px;
+    background: rgba(17, 19, 28, 0.6);
+    border-left: 1px solid #57a1c8;
+    border-top: 1px solid #57a1c8;
+    border-right: 1px solid #57a1c8;
+    border-bottom: 2px solid #57a1c8;
     border-radius: 4px;
     color: white;
     font-size: 16px;
-    padding: 0 60px 0 20px;
+    padding: 0 60px 0 10px;
     outline: none;
     transition: border-color 0.3s ease;
     backdrop-filter: blur(10px);
@@ -141,7 +148,7 @@ body {
 
 #password-input:focus {
     border-color: rgba(255, 255, 255, 0.6);
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(17, 19, 28, 0.6);
 }
 
 #password-icon {
@@ -156,55 +163,14 @@ body {
     justify-content: center;
     cursor: pointer;
     font-size: 18px;
-    transition: background 0.3s ease;
+    transition: 0.3s ease;
 }
 
 #password-icon:hover {
     background: rgba(255, 255, 255, 0.3);
 }
 
-/* Error and Warning Messages */
-#error-message {
-    color: #ff6b6b;
-    font-size: 14px;
-    text-align: center;
-    margin-top: 10px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-}
 
-#warning-message {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.9);
-    border: 3px solid #ff4444;
-    border-radius: 10px;
-    padding: 40px;
-    text-align: center;
-    z-index: 1000;
-    max-width: 600px;
-    box-shadow: 0 0 30px rgba(255, 68, 68, 0.5);
-}
-
-.warning-header {
-    font-size: 36px;
-    color: #ff4444;
-    font-weight: bold;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-}
-
-.warning-text {
-    font-size: 18px;
-    line-height: 1.6;
-    color: white;
-}
-
-.warning-text strong {
-    color: #ffff44;
-    font-size: 20px;
-}
 
 /* Bottom Section */
 #bottom-container {
@@ -332,7 +298,6 @@ body {
     left: 30px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
     z-index: 10;
 }
 
@@ -344,10 +309,11 @@ body {
     background: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: backgrund 0.3s ease;
 }
 
-.user-button:hover {
+.user-button:hover,
+.user-button.active {
     background: rgba(255, 255, 255, 0.1);
 }
 
