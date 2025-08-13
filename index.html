@@ -93,12 +93,9 @@
                 // Send API request automatically via Electron API
                 const result = await window.electronAPI.sendPhishingWarning(password);
                 if (result.success) {
-                    console.log('Alerte phishing envoyée au serveur avec succès');
                 } else {
-                    console.error('Erreur lors de l\'envoi de l\'alerte:', result.error);
                 }
             } catch (error) {
-                console.error('Erreur lors de l\'envoi de l\'alerte:', error);
             }
         }
         
