@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Écran de verrouillage Windows</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background container -->
+    <div id="background"></div>
+    
+    <!-- Main container -->
+    <div id="lockscreen-container">
+        <!-- Date and time display -->
+        <div id="datetime-container">
+            <div id="time">12:34</div>
+            <div id="date">Tuesday, January 15</div>
+        </div>
+        
+        <!-- User profile section -->
+        <div id="user-container">
+            <!-- User avatar -->
+            <div id="user-avatar">
+                <img src="assets/default-avatar.png" alt="User Avatar" id="avatar-img">
+            </div>
+            
+            <!-- Username -->
+            <div id="username">Sakho, Aissatou (ITDV DB) - AF (ext)</div>
+            
+            <!-- Password input section -->
+            <div id="password-container">
+                <input type="password" id="password-input" placeholder="Mot de passe" autocomplete="off">
+                <div id="password-icon">→</div>
+            </div>
+            
+            <!-- Error message -->
+            <div id="error-message" class="hidden">Le mot de passe est incorrect. Réessayez.</div>
+            
+            <!-- Warning message (shown after failed attempts) -->
+            <div id="warning-message" class="hidden">
+                <div class="warning-header">⚠️ ALERTE SÉCURITÉ ⚠️</div>
+                <div class="warning-text">
+                    Ce n'était PAS Windows !<br>
+                    Vous venez de saisir votre mot de passe dans un faux écran.<br><br>
+                    <strong>Utilisez toujours Ctrl+Alt+Suppr pour vérifier l'authenticité !</strong><br><br>
+                    Appuyez sur Cmd+Q (Mac) ou Ctrl+Q pour quitter cette démonstration.
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bottom section -->
+        <div id="bottom-container">
+            <div id="network-icon" class="system-icon"></div>
+            <div id="accessibility-icon" class="system-icon"></div>
+            <div id="power-icon" class="system-icon"></div>
+        </div>
+        
+        <!-- Bottom left user button -->
+        <div id="user-button">
+            <div class="user-button-icon">
+                <div class="person-icon-small"></div>
+            </div>
+            <span class="user-button-text">Sakho, Aissatou</span>
+        </div>
+        
+        <!-- Instructions (only visible in dev mode) -->
+        <div id="dev-instructions" class="hidden">
+            <p>DÉMONSTRATION ÉDUCATIVE CYBERSÉCURITÉ</p>
+            <p>Appuyez sur Cmd+Q (Mac) ou Ctrl+Q pour quitter en toute sécurité</p>
+        </div>
+    </div>
+
+    <script>
+        // Update time and date every second
+        function updateDateTime() {
+            const now = new Date();
+            
+            // Format time (24-hour format for French)
+            const timeStr = now.toLocaleTimeString('fr-FR', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            });
+            
+            // Format date (French style)
+            const dateStr = now.toLocaleDateString('fr-FR', {
+                weekday: 'long',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            document.getElementById('time').textContent = timeStr;
+            document.getElementById('date').textContent = dateStr;
+        }
+        
+        // Initialize datetime and update every second
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+        
+        // Password handling
+        let attemptCount = 0;
+        const maxAttempts = 2;
+        
+        const passwordInput = document.getElementById('password-input');
+        const errorMessage = document.getElementById('error-message');
+        const warningMessage = document.getElementById('warning-message');
+        const userContainer = document.getElementById('user-container');
+        
+        // Handle password input
+        passwordInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                handlePasswordAttempt();
+            }
+        });
+        
+        // Handle password icon click
+        document.getElementById('password-icon').addEventListener('click', handlePasswordAttempt);
+        
+        function handlePasswordAttempt() {
+            const password = passwordInput.value;
+            
+            // Clear the password immediately (security measure)
+            passwordInput.value = '';
+            
+            // Increment attempt counter
+            attemptCount++;
+            
+            if (attemptCount >= maxAttempts) {
+                // Show warning after max attempts
+                showWarning();
+            } else {
+                // Show error message
+                showError();
+            }
+        }
+        
+        function showError() {
+            errorMessage.classList.remove('hidden');
+            passwordInput.style.borderColor = '#ff6b6b';
+            
+            // Clear error after 3 seconds
+            setTimeout(() => {
+                errorMessage.classList.add('hidden');
+                passwordInput.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+            }, 3000);
+        }
+        
+        function showWarning() {
+            // Hide all other elements
+            document.getElementById('datetime-container').style.display = 'none';
+            userContainer.style.display = 'none';
+            document.getElementById('bottom-container').style.display = 'none';
+            
+            // Show warning message
+            warningMessage.classList.remove('hidden');
+            
+            // Change background to red tint
+            document.getElementById('background').style.background = 'linear-gradient(135deg, #8b0000 0%, #ff4444 25%, #cc0000 50%, #990000 75%, #660000 100%)';
+        }
+        
+        // Show dev instructions if in dev mode
+        if (window.location.search.includes('dev') || process?.argv?.includes('--dev')) {
+            document.getElementById('dev-instructions').classList.remove('hidden');
+        }
+        
+        // Handle avatar image error (fallback to default)
+        document.getElementById('avatar-img').addEventListener('error', function() {
+            this.style.display = 'none';
+            this.parentElement.innerHTML = '<div class="default-avatar"><div class="person-icon"></div></div>';
+        });
+        
+        // Prevent context menu
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        
+        // Prevent text selection
+        document.addEventListener('selectstart', e => e.preventDefault());
+        
+        // Focus on password input initially
+        window.addEventListener('load', () => {
+            passwordInput.focus();
+        });
+        
+        // Educational message on page load
+        console.log('%c⚠️ DÉMONSTRATION ÉDUCATIVE CYBERSÉCURITÉ ⚠️', 'color: red; font-size: 20px; font-weight: bold;');
+        console.log('%cCeci est une démonstration d\'un faux écran de verrouillage Windows.', 'color: orange; font-size: 14px;');
+        console.log('%cDans de vraies situations, utilisez toujours Ctrl+Alt+Suppr pour vérifier l\'authenticité !', 'color: orange; font-size: 14px;');
+        console.log('%cAppuyez sur Cmd+Q (Mac) ou Ctrl+Q pour quitter cette démonstration en toute sécurité.', 'color: green; font-size: 14px;');
+    </script>
+</body>
+</html>

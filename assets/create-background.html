@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Background</title>
+</head>
+<body>
+    <canvas id="canvas" width="1920" height="1080"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Create a Windows-like gradient background
+        const gradient = ctx.createLinearGradient(0, 0, 1920, 1080);
+        gradient.addColorStop(0, '#0f7dff');
+        gradient.addColorStop(0.5, '#7c9885');
+        gradient.addColorStop(1, '#29425f');
+        
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 1920, 1080);
+        
+        // Add some subtle geometric shapes for Windows-like feel
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+        ctx.fillRect(100, 200, 600, 400);
+        ctx.fillRect(800, 100, 400, 300);
+        ctx.fillRect(1300, 400, 500, 350);
+        
+        console.log('Background created. Right-click on canvas and "Save image as..." to save as background.jpg');
+    </script>
+</body>
+</html>
