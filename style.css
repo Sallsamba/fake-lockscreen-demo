@@ -183,8 +183,8 @@ body {
 }
 
 .system-icon {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     opacity: 0.9;
     cursor: pointer;
     transition: opacity 0.3s ease, background-color 0.3s ease;
@@ -197,99 +197,6 @@ body {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Network/WiFi Icon */
-#network-icon {
-    position: relative;
-}
-
-#network-icon::before {
-    content: '';
-    position: absolute;
-    width: 3px;
-    height: 8px;
-    background: white;
-    left: 2px;
-    bottom: 2px;
-}
-
-#network-icon::after {
-    content: '';
-    position: absolute;
-    width: 6px;
-    height: 12px;
-    background: white;
-    left: 6px;
-    bottom: 2px;
-    clip-path: polygon(0% 100%, 0% 60%, 50% 60%, 50% 40%, 100% 40%, 100% 100%);
-}
-
-/* Add additional bars with pseudo-elements */
-#network-icon {
-    background: 
-        linear-gradient(white, white) 10px 6px / 3px 6px no-repeat,
-        linear-gradient(white, white) 14px 4px / 3px 10px no-repeat;
-}
-
-/* Accessibility Icon */
-#accessibility-icon {
-    position: relative;
-}
-
-#accessibility-icon::before {
-    content: '';
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: white;
-    top: 2px;
-    left: 8px;
-}
-
-#accessibility-icon::after {
-    content: '';
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    border: 2px solid white;
-    border-radius: 50%;
-    top: 6px;
-    left: 6px;
-    border-top-color: transparent;
-    border-right-color: transparent;
-}
-
-/* Power/Battery Icon */
-#power-icon {
-    position: relative;
-}
-
-#power-icon::before {
-    content: '';
-    position: absolute;
-    width: 14px;
-    height: 8px;
-    border: 1.5px solid white;
-    border-radius: 1px;
-    top: 6px;
-    left: 2px;
-}
-
-#power-icon::after {
-    content: '';
-    position: absolute;
-    width: 2px;
-    height: 4px;
-    background: white;
-    border-radius: 0 1px 1px 0;
-    top: 8px;
-    right: 1px;
-}
-
-/* Battery fill */
-#power-icon {
-    background: linear-gradient(white, white) 4px 8px / 8px 4px no-repeat;
-}
 
 /* Bottom left user buttons */
 #user-buttons-container {
@@ -331,6 +238,17 @@ body {
     position: relative;
     width: 48px;
     height: 48px;
+}
+
+.user-icon-img {
+    width: 54px;
+    height: 54px;
+    filter: brightness(0.7) sepia(0.1) saturate(2) hue-rotate(30deg);
+}
+
+.main-user-icon-img {
+    width: 260px;
+    height: 260px;
 }
 
 .person-icon-small::before {
