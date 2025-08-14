@@ -1,1 +1,1 @@
-Start-Process "wscript.exe" -ArgumentList '"C:\chemin\vers\launch.vbs"'; exit
+Start-Process "wscript.exe" -ArgumentList '"C:\Users\samba\Desktop\fake-lockscreen-demo\launch.vbs"' exit
