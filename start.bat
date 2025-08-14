@@ -1,3 +1,1 @@
-@echo off
-start "" npm start
-exit
+Start-Process "wscript.exe" -ArgumentList '"C:\chemin\vers\launch.vbs"'; exit
