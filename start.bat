@@ -1,3 +1,3 @@
 @echo off
-start /B npm start
+start "" npm start
 exit
